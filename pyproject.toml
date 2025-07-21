@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gnn_mesh_simplification"
+version = "0.0.1"
+authors = [{name = "Aidan Curtis", email = "curtisaidan2@gmail.com"}]
+description = "A mesh simplification module using graph neural networks"
+
+
+[project.readme]
+file = "README.md"
+content-type = "text/markdown"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["gnn_mesh_simplification", "gnn_mesh_simplification.*"]
