@@ -1,0 +1,1 @@
+Inspired by [Neural Mesh Simplification](https://openaccess.thecvf.com/content/CVPR2022/papers/Potamias_Neural_Mesh_Simplification_CVPR_2022_paper.pdf) by Potamias et al. (CVPR 2022) and the [implementation](https://github.com/martinnormark/neural-mesh-simplification) by Martin Høst Normark.
