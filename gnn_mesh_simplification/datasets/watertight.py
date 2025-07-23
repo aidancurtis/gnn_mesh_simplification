@@ -4,7 +4,7 @@ import glob
 import torch
 import torch_geometric.transforms
 import torch_geometric.utils
-from torch_geometric.data import InMemoryDataset
+from torch_geometric.data import InMemoryDataset, Data
 
 import trimesh
 
@@ -13,7 +13,13 @@ torch.serialization.add_safe_globals([getattr])
 
 class Watertight(InMemoryDataset):
     def __init__(
-        self, root, transform=None, pre_transform=None, pre_filter=None, log=True
+        self,
+        root,
+        transform=None,
+        pre_transform=None,
+        pre_filter=None,
+        log=True,
+        force_reload=False,
     ):
         self.categories = [
             "human",
@@ -37,7 +43,7 @@ class Watertight(InMemoryDataset):
             "vase",
             "fourleg",
         ]
-        super().__init__(root, transform, pre_transform, pre_filter, log)
+        super().__init__(root, transform, pre_transform, pre_filter, log, force_reload)
         self.load(
             self.processed_paths[0],
         )
@@ -70,3 +76,8 @@ class Watertight(InMemoryDataset):
                 data_list.append(data)
 
         self.save(data_list, self.processed_paths[0])
+
+    def __getitem__(self, idx: int) -> Data:
+        data = super().get(idx)
+        assert isinstance(data, Data), f"Expected Data object, got {type(data)}"
+        return data

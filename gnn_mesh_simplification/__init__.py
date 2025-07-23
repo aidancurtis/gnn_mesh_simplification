@@ -1,2 +1,3 @@
 import gnn_mesh_simplification.datasets
 import gnn_mesh_simplification.utils
+import gnn_mesh_simplification.models
