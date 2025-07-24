@@ -23,9 +23,9 @@ class EdgePredictor(nn.Module):
 
         features = self.devconv(x, extended_edges)
 
-        attention_scores = self.compute_attention_scores(features, edges)
+        attention_scores = self.compute_attention_scores(features, extended_edges)
         indices, vals = self.compute_estimated_adjacency_matrix(
-            features, edges, attention_scores
+            features, extended_edges, attention_scores
         )
 
         return indices, vals

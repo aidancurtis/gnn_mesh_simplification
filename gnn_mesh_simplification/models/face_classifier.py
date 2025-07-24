@@ -22,9 +22,11 @@ class FaceClassifier(nn.Module):
         # pos: [num_candidate_faces, 3, 3]
         # probs: [num_candidate_faces, 1]
         if pos.dim() == 3:
-            pos = pos.mean(dim=1)
+            pos_mean = pos.mean(dim=1)
+        else:
+            pos_mean = pos
 
-        edges = self.build_knn_graph(x=pos, k=self.k)
+        edges = self.build_knn_graph(x=pos_mean, k=self.k)
 
         for triconv in self.triconvs:
             probs = triconv(probs, pos, edges)
@@ -34,6 +36,7 @@ class FaceClassifier(nn.Module):
         logits = out.squeeze(-1)
 
         probs = torch.softmax(logits, dim=0)
+        print(probs.shape)
 
         return probs
 

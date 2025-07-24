@@ -11,15 +11,18 @@ class DevConv(nn.Module):
         self.activation = nn.ReLU()
 
     def forward(self, x, edges):
+        # x: [num_verts, channels]
+        # edges: [2, num_edges]
         row, col = edges
-        x_i = x[row]
+        x_i = x[row]  # [num_edges, in_channels]
         x_j = x[col]
 
-        diff = x_i - x_j  # [num_edges, 3]
+        diff = x_i - x_j  # [num_edges, channels]
         weighted_diff = self.W_theta(diff)  # [num_edges, out_channels]
         max_diff, _ = scatter_max(
-            weighted_diff, col, dim=0
+            weighted_diff, col, dim=0, dim_size=x.shape[0]
         )  # [num_verts, out_channels]
         out = self.W_phi(max_diff)  # [num_verts, out_channels]
+        out = self.activation(out)
 
-        return self.activation(out)
+        return out

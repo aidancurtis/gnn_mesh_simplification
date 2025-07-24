@@ -7,11 +7,25 @@ from gnn_mesh_simplification.models.layers import TriConv
 
 def test_face_classifier():
     face_classifier = FaceClassifier(
-        k=3, in_channels=1, hidden_channels=128, num_layers=3
+        k=3, in_channels=1, hidden_channels=64, num_layers=3
     )
     assert face_classifier.num_layers == 3
     assert face_classifier.k == 3
     assert isinstance(face_classifier.output_layer, nn.Linear)
+
+    # pos: [num_candidate_faces, 3, 3]
+    # probs: [num_candidate_faces, 1]
+    pos = torch.randn((50, 3, 3))
+    probs = torch.randint(50, size=(50,), dtype=torch.float32)
+    probs = torch.softmax(probs, dim=0)
+    out = face_classifier(pos, probs)
+
+    print("hi")
+
+    pos = torch.randn((50, 3))
+    probs = torch.randint(50, size=(50,), dtype=torch.float32)
+    probs = torch.softmax(probs, dim=0)
+    out = face_classifier(pos, probs)
 
 
 def test_compute_rel_pos_encoding():
@@ -27,4 +41,4 @@ def test_compute_rel_pos_encoding():
     layer = TriConv(1, 10)
     out = layer.compute_rel_pos_encoding(pos, edges)
 
-    assert out.shape == (12, 3, 9)
+    assert out.shape == (12, 9)

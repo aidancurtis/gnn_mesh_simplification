@@ -92,7 +92,8 @@ class MeshSimplifier(nn.Module):
 
     def sample_points(self, pos, edges):
         num_nodes = pos.shape[0]
-        target_nodes = min(max(int(self.ratio * num_nodes), 1), num_nodes)
+        target_nodes = min(max(int((1 - self.ratio) * num_nodes), 1), num_nodes)
+
         sampled_probs = self.point_sampler(pos, edges)
         sampled_indices = self.point_sampler.sample(sampled_probs, target_nodes)
         return sampled_indices, sampled_probs
@@ -116,7 +117,7 @@ class MeshSimplifier(nn.Module):
                     n2 = neighbors[k]
                 if adj_matrix[n1, n2] > 0:
                     triangle = torch.tensor([i, n1, n2], device=self.device)
-                    triangles.append(triangles)
+                    triangles.append(triangle)
 
                     prob = (
                         adj_matrix[i, n1] * adj_matrix[i, n2] * adj_matrix[n1, n2]
@@ -130,4 +131,4 @@ class MeshSimplifier(nn.Module):
             triangles = torch.empty((0, 3), dtype=torch.long, device=self.device)
             triangle_probs = torch.empty(0, dtype=torch.float16, device=self.device)
 
-        return triangle, triangle_probs
+        return triangles, triangle_probs
