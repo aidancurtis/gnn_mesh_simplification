@@ -4,6 +4,6 @@ Inspired by [Neural Mesh Simplification](https://openaccess.thecvf.com/content/C
 
 
 Goals:
-1. Finish programming model
+1. Finish implementing model
 2. Tweak/improve model
 3. Turn into web app
