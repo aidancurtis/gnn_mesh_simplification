@@ -1,5 +1,4 @@
 import torch
-import torch.nn as nn
 from torch_geometric.data import Data
 
 from gnn_mesh_simplification.models import MeshSimplifier
@@ -27,4 +26,4 @@ def test_mesh_simplifier():
     edges = edges[:, condition].unique(dim=-1)
     data = Data(pos=x, edge_index=edges)
 
-    output = mesh_simplifier(data)
+    mesh_simplifier(data)

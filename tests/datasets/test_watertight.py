@@ -1,8 +1,8 @@
 import os
+
 from torch_geometric.transforms import NormalizeScale
 
 from gnn_mesh_simplification.datasets import Watertight
-from gnn_mesh_simplification.utils.transforms import mean_normalization
 
 
 def test_tosca():

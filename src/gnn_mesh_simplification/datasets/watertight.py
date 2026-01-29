@@ -1,12 +1,11 @@
-import os
 import glob
+import os
 
 import torch
 import torch_geometric.transforms
 import torch_geometric.utils
-from torch_geometric.data import InMemoryDataset, Data
-
 import trimesh
+from torch_geometric.data import Data, InMemoryDataset
 
 torch.serialization.add_safe_globals([getattr])
 

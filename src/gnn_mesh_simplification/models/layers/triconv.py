@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from torch_scatter import scatter_min, scatter_max, scatter_add
+from torch_scatter import scatter_add, scatter_max, scatter_min
 
 
 class TriConv(nn.Module):
@@ -47,10 +47,16 @@ class TriConv(nn.Module):
         else:
             edge_vecs = pos[row] - pos[col]  # [num_edges, 3]
             t_max, _ = scatter_max(
-                edge_vecs, col, dim=0, dim_size=pos.shape[0]  # [num_faces, 3]
+                edge_vecs,
+                col,
+                dim=0,
+                dim_size=pos.shape[0],  # [num_faces, 3]
             )
             t_min, _ = scatter_min(
-                edge_vecs, col, dim=0, dim_size=pos.shape[0]  # [num_faces, 3]
+                edge_vecs,
+                col,
+                dim=0,
+                dim_size=pos.shape[0],  # [num_faces, 3]
             )
             barycenter = pos
 
@@ -61,6 +67,7 @@ class TriConv(nn.Module):
         # bary_diff = bary_diff.expand_as(t_max_diff)  # [num_edges, 3, 3]
 
         rel_pos_encoding = torch.cat(
-            [t_min_diff, t_max_diff, bary_diff], dim=-1  # [num_edges, 9]
+            [t_min_diff, t_max_diff, bary_diff],
+            dim=-1,  # [num_edges, 9]
         )
         return rel_pos_encoding

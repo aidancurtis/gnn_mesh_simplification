@@ -1,5 +1,5 @@
-from trimesh import Trimesh
 import networkx as nx
+from trimesh import Trimesh
 
 
 def mesh_to_graph(mesh: Trimesh):

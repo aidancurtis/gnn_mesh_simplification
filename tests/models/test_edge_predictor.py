@@ -1,6 +1,4 @@
-import pytest
 import torch
-import torch.nn as nn
 
 from gnn_mesh_simplification.models import EdgePredictor
 from gnn_mesh_simplification.models.layers import DevConv
@@ -18,4 +16,4 @@ def test_edge_predictor():
     assert values.shape[0] == indices.shape[1]
 
     s = torch.sparse_coo_tensor(indices=indices, values=values, size=(50, 50))
-    s_dense = s.to_dense()
+    s.to_dense()

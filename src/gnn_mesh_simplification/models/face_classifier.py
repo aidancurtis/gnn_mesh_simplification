@@ -41,9 +41,6 @@ class FaceClassifier(nn.Module):
         return probs
 
     def build_knn_graph(self, x, k):
-        batch_size = 1
-        edge_index = []
-
         batch = x
         n = x.shape[0]
 

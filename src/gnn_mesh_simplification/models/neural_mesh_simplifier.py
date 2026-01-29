@@ -2,9 +2,9 @@ import torch
 import torch.nn as nn
 import torch_geometric.utils
 
-from .point_sampler import PointSampler
 from .edge_predictor import EdgePredictor
 from .face_classifier import FaceClassifier
+from .point_sampler import PointSampler
 
 
 class MeshSimplifier(nn.Module):
@@ -75,8 +75,10 @@ class MeshSimplifier(nn.Module):
         if face_probs.shape[0] > 0:
             threshold = torch.quantile(face_probs, 1 - self.ratio)
             simplified_faces = candidate_faces[face_probs > threshold]
+            face_probs = face_probs[face_probs > threshold]
         else:
             simplified_faces = torch.empty((0, 3), dtype=torch.long, device=self.device)
+            face_probs = torch.empty((0), dtype=torch.long, device=self.device)
 
         return {
             "sampled_indices": sampled_indices,

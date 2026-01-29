@@ -18,14 +18,14 @@ def test_face_classifier():
     pos = torch.randn((50, 3, 3))
     probs = torch.randint(50, size=(50,), dtype=torch.float32)
     probs = torch.softmax(probs, dim=0)
-    out = face_classifier(pos, probs)
+    face_classifier(pos, probs)
 
     print("hi")
 
     pos = torch.randn((50, 3))
     probs = torch.randint(50, size=(50,), dtype=torch.float32)
     probs = torch.softmax(probs, dim=0)
-    out = face_classifier(pos, probs)
+    face_classifier(pos, probs)
 
 
 def test_compute_rel_pos_encoding():

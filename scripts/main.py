@@ -1,17 +1,9 @@
 import os
-import sys
 
-import numpy as np
-import torch
-import torch_geometric
-
-import trimesh
+from gnn_mesh_simplification.datasets import TOSCA
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 data_dir = os.path.join(script_dir, "../data/tosca")
-
-from gnn_mesh_simplification.datasets import TOSCA
-from gnn_mesh_simplification.models import PointSampler, FaceClassifier
 
 dataset = TOSCA(data_dir)
 data = dataset[0]
@@ -20,8 +12,8 @@ x = data["pos"]
 edges = data["edge_index"]
 faces = data["face"]
 faces = faces.t()
-face_c = FaceClassifier(20, 20)
-g = face_c(x, edges, faces)
+# face_c = FaceClassifier(20, 20, )
+# g = face_c(x, edges, faces)
 # mesh = trimesh.Trimesh(vertices=x, faces=faces)
 # # Number of vertices
 # n_vertices = len(mesh.vertices)
